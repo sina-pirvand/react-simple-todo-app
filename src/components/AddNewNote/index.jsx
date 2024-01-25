@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-const AddNewNote = () => {
+const AddNewNote = ({ handleAddNote }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!title || !description) return;
     const newNote = {
       title, //title:title
       description, //description:description
@@ -12,7 +13,7 @@ const AddNewNote = () => {
       completed: false,
       createdAt: new Date().toISOString(),
     };
-    setNotes((prevNotes) => [...prevNotes, newNote]);
+    handleAddNote(newNote);
     setTitle("");
     setDescription("");
   };
