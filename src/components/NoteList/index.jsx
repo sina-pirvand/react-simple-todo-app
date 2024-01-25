@@ -1,16 +1,21 @@
-const NoteList = ({ notes, deleteNote }) => {
+const NoteList = ({ notes, deleteNote, completeNote }) => {
   return (
     <div className="note-list">
       {notes.map((note) => (
-        <NoteItem key={note.id} note={note} deleteNote={deleteNote} />
+        <NoteItem
+          key={note.id}
+          note={note}
+          deleteNote={deleteNote}
+          completeNote={completeNote}
+        />
       ))}
     </div>
   );
 };
 
-const NoteItem = ({ note, deleteNote }) => {
+const NoteItem = ({ note, deleteNote, completeNote }) => {
   return (
-    <div className="note-item">
+    <div className={`note-item ${note.completed ? "completed" : ""}`}>
       <div className="note-item__header">
         <div>
           <p className="title">{note.title}</p>
@@ -18,7 +23,16 @@ const NoteItem = ({ note, deleteNote }) => {
         </div>
         <div className="actions">
           <button onClick={() => deleteNote(note.id)}>❌</button>
-          <input type="checkbox" name="" id="" />
+          <input
+            type="checkbox"
+            name={note.title}
+            id={note.id}
+            value={note.id}
+            checked={note.completed}
+            onClick={() => {
+              completeNote(note.id);
+            }}
+          />
         </div>
       </div>
       <div className="note-item__footer">

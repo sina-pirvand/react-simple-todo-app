@@ -69,7 +69,8 @@
 }
 
 .note-item.completed {
-  opacity: 80%;
+  opacity: 60%;
+  background-color: #eee;
 }
 
 .note-item__header .title {
