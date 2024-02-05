@@ -3,9 +3,11 @@ import "./App.css";
 import AddNewNote from "./components/AddNewNote";
 import NoteList from "./components/NoteList";
 import NoteStatusBar from "./components/NoteStatusBar";
+import NoteHeader from "./components/NoteHeader";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [sortBy, setSortBy] = useState("earliest");
   const handleAddNote = (newNote) => {
     setNotes((prevNotes) => [...prevNotes, newNote]);
   };
@@ -30,10 +32,13 @@ function App() {
       )
     );
   };
-
   return (
     <div className="container">
-      <div className="note-header">Note Header</div>
+      <NoteHeader
+        notes={notes}
+        sortBy={sortBy}
+        handleSort={(e) => setSortBy(e.target.value)}
+      />
       <div className="note-app">
         <AddNewNote handleAddNote={handleAddNote} />
         <div className="note-container">
@@ -42,6 +47,7 @@ function App() {
             notes={notes}
             deleteNote={handleDeleteNote}
             completeNote={handleCompleteNote}
+            sortBy={sortBy}
           />
         </div>
       </div>
