@@ -1,9 +1,11 @@
+import Message from "../Message";
+
 const NoteStatusBar = ({ notes }) => {
   const allNotes = notes.length;
   const completedNotes = notes.filter((note) => note.completed).length;
   const pendingNotes = allNotes - completedNotes;
 
-  if (!allNotes) return <h2>No Todo To Show ¯\_(ツ)_/¯</h2>;
+  if (!allNotes) return <Message>No Todo Added Yet.</Message>;
   return (
     <ul className="note-status">
       <li>
