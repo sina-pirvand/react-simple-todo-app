@@ -1,4 +1,7 @@
-const NoteList = ({ notes, deleteNote, completeNote, sortBy }) => {
+import { useNotes, useNotesDispatch } from "../../context/NotesContext";
+
+const NoteList = ({ sortBy }) => {
+  const notes = useNotes();
   let sortedNotes = notes;
   if (sortBy === "earliest")
     sortedNotes = [...notes].sort(
@@ -15,18 +18,14 @@ const NoteList = ({ notes, deleteNote, completeNote, sortBy }) => {
   return (
     <div className="note-list">
       {sortedNotes.map((note) => (
-        <NoteItem
-          key={note.id}
-          note={note}
-          deleteNote={deleteNote}
-          completeNote={completeNote}
-        />
+        <NoteItem key={note.id} note={note} />
       ))}
     </div>
   );
 };
 
-const NoteItem = ({ note, deleteNote, completeNote }) => {
+const NoteItem = ({ note }) => {
+  const dispatch = useNotesDispatch();
   return (
     <div className={`note-item ${note.completed ? "completed" : ""}`}>
       <div className="note-item__header">
@@ -35,7 +34,11 @@ const NoteItem = ({ note, deleteNote, completeNote }) => {
           <p className="desc">{note.description}</p>
         </div>
         <div className="actions">
-          <button onClick={() => deleteNote(note.id)}>❌</button>
+          <button
+            onClick={() => dispatch({ type: "DELETED", payload: note.id })}
+          >
+            ❌
+          </button>
           <input
             type="checkbox"
             name={note.title}
@@ -43,7 +46,7 @@ const NoteItem = ({ note, deleteNote, completeNote }) => {
             value={note.id}
             checked={note.completed}
             onChange={() => {
-              completeNote(note.id);
+              dispatch({ type: "COMPLETED", payload: note.id });
             }}
           />
         </div>

@@ -1,6 +1,9 @@
+import { useNotes } from "../../context/NotesContext";
 import Message from "../Message";
 
-const NoteStatusBar = ({ notes }) => {
+const NoteStatusBar = () => {
+  const notes = useNotes();
+
   const allNotes = notes.length;
   const completedNotes = notes.filter((note) => note.completed).length;
   const pendingNotes = allNotes - completedNotes;

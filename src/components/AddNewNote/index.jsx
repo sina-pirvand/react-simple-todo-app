@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNotesDispatch } from "../../context/NotesContext";
 
-const AddNewNote = ({ handleAddNote }) => {
+const AddNewNote = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useNotesDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !description) return;
@@ -13,7 +16,8 @@ const AddNewNote = ({ handleAddNote }) => {
       completed: false,
       createdAt: new Date().toISOString(),
     };
-    handleAddNote(newNote);
+    // handleAddNote(newNote);
+    dispatch({ type: "ADDED", payload: newNote });
     setTitle("");
     setDescription("");
   };
